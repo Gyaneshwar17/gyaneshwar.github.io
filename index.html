@@ -11,12 +11,13 @@
 
     <style>
         :root {
-            --bg-color: #050505;
-            --text-primary: #e0e0e0;
-            --neon-cyan: #00f3ff;
-            --neon-pink: #ff00ff;
-            --glass-panel: rgba(255, 255, 255, 0.05);
-            --border-color: rgba(0, 243, 255, 0.2);
+            /* Lighter "Void" Theme */
+            --bg-color: #0b0c10;
+            --text-primary: #c5c6c7;
+            --neon-cyan: #66fcf1;
+            --neon-blue: #45a29e;
+            --glass-panel: rgba(11, 12, 16, 0.6); 
+            --glass-border: rgba(102, 252, 241, 0.3);
             --font-display: 'Orbitron', sans-serif;
             --font-body: 'Rajdhani', sans-serif;
         }
@@ -28,6 +29,7 @@
             color: var(--text-primary);
             font-family: var(--font-body);
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
         /* --- Canvas Background --- */
@@ -38,7 +40,7 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.6;
+            opacity: 0.4; /* Made lighter as requested */
         }
 
         /* --- Navigation --- */
@@ -46,13 +48,14 @@
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 1.5rem;
+            padding: 1.5rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
-            backdrop-filter: blur(5px);
+            background: rgba(11, 12, 16, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .logo {
@@ -61,18 +64,21 @@
             font-size: 1.2rem;
             color: var(--neon-cyan);
             letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(102, 252, 241, 0.5);
         }
 
         .nav-links button {
             background: none;
             border: 1px solid var(--neon-cyan);
             color: var(--neon-cyan);
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1.2rem;
             margin-left: 1rem;
             cursor: pointer;
             font-family: var(--font-display);
             text-transform: uppercase;
+            font-size: 0.8rem;
             transition: 0.3s;
+            border-radius: 2px;
         }
 
         .nav-links button:hover {
@@ -93,149 +99,204 @@
             position: relative;
         }
 
-        .glitch-text {
+        .hero h1 {
             font-family: var(--font-display);
-            font-size: 3.5rem;
+            font-size: 4rem;
+            color: #fff;
             text-transform: uppercase;
-            position: relative;
-            text-shadow: 2px 2px var(--neon-pink), -2px -2px var(--neon-cyan);
-            animation: glitch 3s infinite;
+            margin-bottom: 0.5rem;
         }
 
-        .subtitle {
+        .hero h2 {
+            font-family: var(--font-display);
             font-size: 1.5rem;
-            margin-top: 1rem;
-            color: #aaa;
-            max-width: 600px;
+            color: var(--neon-cyan);
+            margin-bottom: 2rem;
+            letter-spacing: 3px;
         }
 
-        .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            animation: bounce 2s infinite;
-            opacity: 0.7;
+        .achievement-badge {
+            margin-top: 1.5rem;
+            padding: 0.8rem 1.5rem;
+            border: 1px solid var(--neon-blue);
+            background: rgba(69, 162, 158, 0.1);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        /* --- 3D Skill Graph Container --- */
-        #skills-section {
-            height: 80vh;
+        /* --- 3D Tensor Section --- */
+        #tensor-section {
+            height: 70vh;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            background: radial-gradient(circle at center, rgba(31,40,51,0.4) 0%, rgba(11,12,16,1) 70%);
         }
         
-        .skills-overlay {
+        .tensor-label {
             position: absolute;
+            bottom: 20px;
+            right: 20px;
+            text-align: right;
             pointer-events: none;
-            z-index: 10;
-            text-align: center;
         }
+        .tensor-label h3 { color: var(--neon-cyan); font-family: var(--font-display); }
 
-        /* --- Projects Section --- */
-        .section-title {
+        /* --- Projects Grid --- */
+        .section-header {
+            text-align: center;
+            padding: 5rem 0 3rem 0;
+        }
+        
+        .section-header h2 {
             font-family: var(--font-display);
             font-size: 2.5rem;
-            color: var(--neon-cyan);
-            text-align: center;
-            margin: 4rem 0 2rem 0;
-            border-bottom: 1px solid var(--border-color);
+            color: #fff;
             display: inline-block;
+            border-bottom: 3px solid var(--neon-cyan);
             padding-bottom: 0.5rem;
         }
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
-            padding: 2rem 10%;
+            padding: 0 10% 5rem 10%;
         }
 
         .project-card {
-            background: var(--glass-panel);
-            border: 1px solid var(--border-color);
-            padding: 1.5rem;
-            border-radius: 5px;
-            transition: 0.4s;
+            background: rgba(31, 40, 51, 0.4);
+            border: 1px solid #333;
+            padding: 2rem;
+            border-radius: 8px;
+            transition: all 0.4s ease;
             position: relative;
-            overflow: hidden;
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.15);
-            border-color: var(--neon-pink);
+            transform: translateY(-10px);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 25px rgba(102, 252, 241, 0.15);
+            background: rgba(31, 40, 51, 0.6);
         }
 
         .project-card h3 {
             font-family: var(--font-display);
-            color: var(--neon-pink);
-            margin-bottom: 0.5rem;
+            color: #fff;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
         }
 
-        .tech-tag {
-            display: inline-block;
-            font-size: 0.8rem;
-            padding: 2px 8px;
-            border: 1px solid #555;
-            margin: 5px 5px 0 0;
-            border-radius: 3px;
+        .project-card p {
+            font-size: 0.95rem;
             color: #aaa;
+            margin-bottom: 1.5rem;
         }
 
-        /* --- Chatbot Contact Section --- */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-cyan);
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .code-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: #000;
+            background: var(--neon-cyan);
+            padding: 0.5rem 1rem;
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            text-align: center;
+            border-radius: 2px;
+            transition: 0.3s;
+            margin-top: auto;
+        }
+
+        .code-btn:hover {
+            background: #fff;
+            box-shadow: 0 0 10px #fff;
+        }
+
+        /* --- Uplink Terminal --- */
         .contact-section {
             padding: 4rem 10%;
             display: flex;
             flex-direction: column;
             align-items: center;
+            background: linear-gradient(0deg, #000 0%, var(--bg-color) 100%);
         }
 
         .terminal-window {
             width: 100%;
-            max-width: 600px;
-            background: #0f0f0f;
+            max-width: 700px;
+            background: #000;
             border: 1px solid #333;
-            border-radius: 5px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-radius: 6px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            font-family: 'Courier New', Courier, monospace;
         }
 
         .terminal-header {
-            background: #1a1a1a;
-            padding: 0.5rem;
+            background: #1c1c1c;
+            padding: 0.8rem;
             display: flex;
-            gap: 5px;
+            gap: 8px;
+            border-bottom: 1px solid #333;
         }
 
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
         .red { background: #ff5f56; }
         .yellow { background: #ffbd2e; }
         .green { background: #27c93f; }
 
         .terminal-body {
-            padding: 1rem;
-            height: 300px;
+            padding: 1.5rem;
+            height: 350px;
             overflow-y: auto;
-            font-family: monospace;
-            font-size: 0.9rem;
-            color: #0f0;
+            color: var(--neon-cyan);
+            font-size: 0.95rem;
         }
 
         .input-line {
             display: flex;
             border-top: 1px solid #333;
-            padding: 0.5rem;
+            padding: 1rem;
+            background: #050505;
         }
 
-        .input-line span { color: var(--neon-pink); margin-right: 10px; }
+        .input-line span { color: var(--neon-blue); margin-right: 10px; user-select: none;}
         .input-line input {
             background: transparent;
             border: none;
             color: #fff;
             width: 100%;
-            font-family: monospace;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
             outline: none;
         }
 
@@ -244,55 +305,50 @@
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.95);
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(5px);
         }
 
         .modal-content {
             background: #111;
-            width: 80%;
-            max-width: 900px;
-            height: 80%;
+            width: 90%;
+            max-width: 800px;
+            height: 85%;
             overflow-y: auto;
-            padding: 2rem;
+            padding: 3rem;
             border: 1px solid var(--neon-cyan);
             position: relative;
             color: #ccc;
+            box-shadow: 0 0 50px rgba(102, 252, 241, 0.1);
         }
 
         .close-modal {
             position: absolute;
-            top: 10px; right: 20px;
-            font-size: 2rem;
+            top: 15px; right: 25px;
+            font-size: 2.5rem;
             cursor: pointer;
-            color: var(--neon-pink);
+            color: var(--neon-cyan);
+            transition: 0.3s;
         }
+        .close-modal:hover { transform: rotate(90deg); color: #fff; }
 
-        .resume-header { border-bottom: 2px solid var(--neon-cyan); margin-bottom: 20px; padding-bottom: 10px; }
-        .resume-section { margin-bottom: 20px; }
-        .resume-section h4 { color: var(--neon-cyan); margin-bottom: 10px; font-family: var(--font-display); }
+        .resume-header { border-bottom: 1px solid #333; margin-bottom: 20px; padding-bottom: 20px; }
+        .resume-header h2 { color: #fff; font-family: var(--font-display); font-size: 2rem; }
+        .resume-section { margin-bottom: 25px; }
+        .resume-section h4 { color: var(--neon-cyan); margin-bottom: 10px; font-family: var(--font-display); letter-spacing: 1px; border-left: 3px solid var(--neon-cyan); padding-left: 10px;}
+        .resume-item { margin-bottom: 15px; }
+        .resume-item strong { color: #fff; display: block; font-size: 1.1rem; }
+        .resume-item em { color: #888; font-style: normal; font-size: 0.9rem; }
+        .resume-item ul { margin-left: 20px; margin-top: 5px; color: #bbb; }
+        .resume-item li { margin-bottom: 5px; }
 
-        /* Animations */
-        @keyframes glitch {
-            0% { text-shadow: 2px 2px var(--neon-pink), -2px -2px var(--neon-cyan); }
-            25% { text-shadow: -2px 2px var(--neon-pink), 2px -2px var(--neon-cyan); }
-            50% { text-shadow: 2px -2px var(--neon-pink), -2px 2px var(--neon-cyan); }
-            75% { text-shadow: -2px -2px var(--neon-pink), 2px 2px var(--neon-cyan); }
-            100% { text-shadow: 2px 2px var(--neon-pink), -2px -2px var(--neon-cyan); }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-10px);}
-            60% {transform: translateY(-5px);}
-        }
-
-        /* Mobile Adjustments */
         @media (max-width: 768px) {
-            .glitch-text { font-size: 2rem; }
-            .projects-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+            .projects-grid { padding: 0 5% 5rem 5%; }
+            .modal-content { padding: 1.5rem; width: 95%; }
         }
     </style>
 </head>
@@ -303,91 +359,117 @@
     <nav>
         <div class="logo">G. GYANESHWAR RAO</div>
         <div class="nav-links">
-            <button onclick="document.getElementById('projects').scrollIntoView()">Work</button>
-            <button onclick="openResume()">Resume</button>
+            <button onclick="document.getElementById('projects').scrollIntoView()">Projects</button>
+            <button onclick="openResume()">View CV</button>
         </div>
     </nav>
 
     <section class="hero">
-        <h1 class="glitch-text">Visual Intelligence Architect</h1>
-        <p class="subtitle">AI/ML Engineer | 3D Vision Specialist | Converting 2D Pixels to 4D Realities</p>
-        <div style="margin-top: 2rem;">
-            <p style="color: var(--neon-cyan); font-family: var(--font-display);">
-                <i class="fas fa-trophy"></i> NTIRE 2025: Ranked #7 Global
-            </p>
-        </div>
-        <div class="scroll-indicator">
-            <i class="fas fa-chevron-down" style="color: var(--neon-cyan); font-size: 2rem;"></i>
+        <h1>G. Gyaneshwar Rao</h1>
+        <h2>AI/ML Engineer</h2> <p style="color: #888; max-width: 600px;">
+            Specializing in Deep Learning, Computer Vision, and 3D Asset Generation.
+            Currently optimizing edge AI at Indusvision.
+        </p>
+        
+        <div class="achievement-badge">
+            <i class="fas fa-trophy" style="color: var(--neon-cyan);"></i>
+            <span>Ranked #7 Global: NTIRE 2025 Super-Resolution Challenge</span>
         </div>
     </section>
 
-    <section id="skills-section">
-        <div class="skills-overlay">
-            <h2 style="font-family: var(--font-display); color: #fff; background: rgba(0,0,0,0.7); padding: 10px;">
-                TENSOR SKILL GRAPH
-            </h2>
-            <p style="font-size: 0.9rem; color: #aaa;">Interactive 3D Representation</p>
+    <section id="tensor-section">
+        <div class="tensor-label">
+            <h3>MULTIDIMENSIONAL<br>SKILL TENSOR</h3>
+            <p style="font-size: 0.8rem; color: #666;">Hover to rotate</p>
         </div>
         </section>
 
-    <div style="text-align: center;">
-        <h2 class="section-title">DEPLOYED PROTOCOLS</h2>
-    </div>
-    
-    <section id="projects" class="projects-grid">
-        <div class="project-card">
-            <h3>Dynamic Cloth Sim</h3>
-            <p>Extended HOOD's graph neural network framework. Developed novel self-collision loss function to prevent fabric interpenetration.</p>
-            <br>
-            <div class="tech-tag">Python</div>
-            <div class="tech-tag">GNN</div>
-            <div class="tech-tag">Physics Sim</div>
+    <section id="projects">
+        <div class="section-header">
+            <h2>TECHNICAL PROJECTS</h2>
         </div>
+        
+        <div class="projects-grid">
+            <div class="project-card">
+                <div>
+                    <h3>Dynamic Cloth Simulation</h3>
+                    <p>Research project extending HOOD's GNN framework. Developed a self-collision loss function to prevent fabric interpenetration during complex dynamics.</p>
+                    <div class="tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">GNN</span>
+                        <span class="tag">Physics Sim</span>
+                    </div>
+                </div>
+                <a href="https://github.com/Gyaneshwar17/YOUR-REPO-HERE" target="_blank" class="code-btn">
+                    <i class="fab fa-github"></i> Source Code
+                </a>
+            </div>
 
-        <div class="project-card">
-            <h3>GenAI 3D Assets</h3>
-            <p>Pipeline generating 3D game assets from single 2D images using Zero123 and Trellis. Full 360-degree model generation.</p>
-            <br>
-            <div class="tech-tag">Generative AI</div>
-            <div class="tech-tag">Zero123</div>
-            <div class="tech-tag">Computer Vision</div>
-        </div>
+            <div class="project-card">
+                <div>
+                    <h3>GenAI Game Assets</h3>
+                    <p>Pipeline generating 360-degree 3D assets from single 2D images. Utilized Zero123 and Trellis to create realistic textured models for game engines.</p>
+                    <div class="tags">
+                        <span class="tag">Generative AI</span>
+                        <span class="tag">Zero123</span>
+                        <span class="tag">Computer Vision</span>
+                    </div>
+                </div>
+                <a href="https://github.com/Gyaneshwar17/YOUR-REPO-HERE" target="_blank" class="code-btn">
+                    <i class="fab fa-github"></i> Source Code
+                </a>
+            </div>
 
-        <div class="project-card">
-            <h3>Visual Intelligence @ Indusvision</h3>
-            <p>Developing deep learning pipelines for detection, tracking, and scene understanding. Optimized for edge devices.</p>
-            <br>
-            <div class="tech-tag">Deep Learning</div>
-            <div class="tech-tag">Edge AI</div>
-            <div class="tech-tag">Real-time</div>
-        </div>
+            <div class="project-card">
+                <div>
+                    <h3>Low-Light Enhancement</h3>
+                    <p>Implemented Retinex Theory with VGG-16 perceptual loss to decompose images into reflectance and illumination maps, significantly improving brightness.</p>
+                    <div class="tags">
+                        <span class="tag">PyTorch</span>
+                        <span class="tag">Image Processing</span>
+                        <span class="tag">VGG-16</span>
+                    </div>
+                </div>
+                <a href="https://github.com/Gyaneshwar17/YOUR-REPO-HERE" target="_blank" class="code-btn">
+                    <i class="fab fa-github"></i> Source Code
+                </a>
+            </div>
 
-        <div class="project-card">
-            <h3>Low-Light Enhancement</h3>
-            <p>Retinex Theory implementation with VGG-16 perceptual loss to decompose images into reflectance and illumination maps.</p>
-            <br>
-            <div class="tech-tag">Image Processing</div>
-            <div class="tech-tag">VGG-16</div>
-            <div class="tech-tag">Retinex</div>
+            <div class="project-card">
+                <div>
+                    <h3>3D Underwater Scene</h3>
+                    <p>Created realistic underwater environments using Unity & Unreal Engine. Modeled detailed sea life and landscapes for educational tools.</p>
+                    <div class="tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">Unreal Engine</span>
+                        <span class="tag">3D Modelling</span>
+                    </div>
+                </div>
+                <a href="https://github.com/Gyaneshwar17/YOUR-REPO-HERE" target="_blank" class="code-btn">
+                    <i class="fab fa-github"></i> Source Code
+                </a>
+            </div>
         </div>
     </section>
 
     <section class="contact-section">
-        <h2 class="section-title">UPLINK TERMINAL</h2>
+        <h2 style="font-family: var(--font-display); color: #fff; margin-bottom: 2rem;">UPLINK TERMINAL</h2>
         <div class="terminal-window">
             <div class="terminal-header">
                 <div class="dot red"></div>
                 <div class="dot yellow"></div>
                 <div class="dot green"></div>
+                <span style="color: #666; font-size: 0.8rem; margin-left: 10px;">bash --login</span>
             </div>
             <div class="terminal-body" id="chat-output">
                 <p>> System initialized...</p>
-                <p>> Welcome. I am the portfolio assistant for Gyaneshwar.</p>
-                <p>> Type 'email' to contact, 'github' for code, or 'status' for availability.</p>
+                <p>> User: G. Gyaneshwar Rao [Authenticated]</p>
+                <p>> Available commands: <span style="color: #fff;">email</span>, <span style="color: #fff;">github</span>, <span style="color: #fff;">skills</span>, <span style="color: #fff;">clear</span></p>
+                <br>
             </div>
             <div class="input-line">
-                <span>user@guest:~$</span>
-                <input type="text" id="chat-input" placeholder="Enter command..." autocomplete="off">
+                <span>guest@gyaneshwar:~$</span>
+                <input type="text" id="chat-input" placeholder="Type a command..." autocomplete="off">
             </div>
         </div>
     </section>
@@ -397,45 +479,59 @@
             <span class="close-modal" onclick="closeResume()">&times;</span>
             <div class="resume-header">
                 <h2>G. Gyaneshwar Rao</h2>
-                <p>AI/ML Engineer | Hubli, India | +91 7019918559</p>
-                <p>Mggyaneshwarraol@gmail.com</p>
+                <p>Hubli, India | +91 7019918559 | Mggyaneshwarraol@gmail.com</p>
+                <p style="color: var(--neon-cyan); margin-top: 5px;">AI/ML Engineer | Deep Learning Specialist</p>
             </div>
             
             <div class="resume-section">
                 <h4>EXPERIENCE</h4>
-                <p><strong>AI/ML Engineer | Indusvision.ai</strong> (Aug 2025 - Present)</p>
-                <ul>
-                    <li>Developing deep learning pipelines for detection and tracking.</li>
-                    <li>Optimizing models for edge devices.</li>
-                </ul>
-                <br>
-                <p><strong>Research Intern | CEVI, KLE Tech</strong> (Dec 2021 - July 2025)</p>
-                <ul>
-                    <li>Worked on 3D scene generation and game asset building.</li>
-                    <li>Research on 4D cloth dynamics and realistic fabric simulation.</li>
-                </ul>
+                <div class="resume-item">
+                    <strong>AI/ML Engineer @ Indusvision.ai</strong>
+                    <em>Aug 2025 - Present</em>
+                    <ul>
+                        <li>Developing deep learning pipelines for detection, tracking, and scene understanding.</li>
+                        <li>Optimizing models for edge devices and production environments.</li>
+                        <li>Deploying real-time visual intelligence applications.</li>
+                    </ul>
+                </div>
+                <div class="resume-item">
+                    <strong>Research Intern @ CEVI, KLE Tech</strong>
+                    <em>Dec 2021 - July 2025</em>
+                    <ul>
+                        <li>Research on 4D cloth dynamics and realistic fabric simulation.</li>
+                        <li>Explored methods to convert 2D images into 3D models (GenAI).</li>
+                    </ul>
+                </div>
             </div>
 
             <div class="resume-section">
                 <h4>EDUCATION</h4>
-                <p><strong>B.E. ECE</strong> | KLE Technological University (CGPA: 7.75)</p>
+                <div class="resume-item">
+                    <strong>B.E. Electronics & Communication</strong>
+                    <em>KLE Technological University | CGPA: 7.75</em>
+                </div>
             </div>
 
             <div class="resume-section">
-                <h4>SKILLS</h4>
-                <p>Python, C++, PyTorch, Computer Vision, Unity, Unreal Engine, Blender, Git, Linux.</p>
+                <h4>TECHNICAL SKILLS</h4>
+                <p><strong>Languages:</strong> Python, C++, C</p>
+                <p><strong>Core:</strong> PyTorch, Computer Vision, Deep Learning, GNNs</p>
+                <p><strong>3D Tools:</strong> Unity, Unreal Engine, Blender</p>
+                <p><strong>DevOps/Tools:</strong> Linux, Git, VS Code, MySQL</p>
             </div>
             
             <div class="resume-section">
                 <h4>ACHIEVEMENTS</h4>
-                <p>NTIRE 2025 Super-Resolution Challenge: Ranked #7</p>
-                <p>NTIRE 2025 Image Denoising Challenge: Ranked #10</p>
+                <ul>
+                    <li><strong>Rank #7:</strong> NTIRE 2025 Image Super-Resolution Challenge (Top 25 teams).</li>
+                    <li><strong>Rank #10:</strong> NTIRE 2025 Image Denoising Challenge.</li>
+                </ul>
             </div>
         </div>
     </div>
 
     <script>
-        // --- 1. NEURAL BACKGROUND CANVAS ---
+        // --- 1. NEURAL BACKGROUND (Lighter) ---
         const canvas = document.getElementById('neural-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -452,8 +548,8 @@
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
+                this.vx = (Math.random() - 0.5) * 0.3; // Slower movement
+                this.vy = (Math.random() - 0.5) * 0.3;
                 this.size = Math.random() * 2;
             }
             update() {
@@ -463,14 +559,15 @@
                 if (this.y < 0 || this.y > height) this.vy *= -1;
             }
             draw() {
-                ctx.fillStyle = 'rgba(0, 243, 255, 0.5)';
+                ctx.fillStyle = 'rgba(102, 252, 241, 0.3)'; // Cyan, low opacity
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
             }
         }
 
-        for (let i = 0; i < 60; i++) particles.push(new Particle());
+        // Reduced particle count for cleaner look
+        for (let i = 0; i < 50; i++) particles.push(new Particle());
 
         function animateCanvas() {
             ctx.clearRect(0, 0, width, height);
@@ -481,9 +578,9 @@
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
                     const distance = Math.sqrt(dx*dx + dy*dy);
-                    if (distance < 150) {
+                    if (distance < 120) {
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(0, 243, 255, ${1 - distance/150})`;
+                        ctx.strokeStyle = `rgba(102, 252, 241, ${0.15 - distance/800})`; // Very faint lines
                         ctx.lineWidth = 0.5;
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
@@ -495,76 +592,82 @@
         }
         animateCanvas();
 
-        // --- 2. THREE.JS SKILL GRAPH ---
+        // --- 2. THREE.JS TENSOR (Geometric Grid) ---
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / (window.innerHeight * 0.8), 0.1, 1000);
+        // Transparent background for Three.js
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / (window.innerHeight * 0.7), 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         
-        const container = document.getElementById('skills-section');
+        const container = document.getElementById('tensor-section');
         renderer.setSize(container.clientWidth, container.clientHeight);
         container.appendChild(renderer.domElement);
 
-        const skills = ["Python", "C++", "PyTorch", "OpenCV", "Unity", "Unreal", "Blender", "GNN", "SLAM"];
-        const group = new THREE.Group();
+        const tensorGroup = new THREE.Group();
         
-        // Create cubes representing tensors
-        skills.forEach((skill, i) => {
-            const geometry = new THREE.BoxGeometry(1, 1, 1);
-            const material = new THREE.MeshBasicMaterial({ 
-                color: i % 2 === 0 ? 0x00f3ff : 0xff00ff,
-                wireframe: true 
-            });
-            const cube = new THREE.Mesh(geometry, material);
-            
-            // Random spherical position
-            const theta = Math.random() * Math.PI * 2;
-            const phi = Math.acos(2 * Math.random() - 1);
-            const radius = 4;
-            
-            cube.position.x = radius * Math.sin(phi) * Math.cos(theta);
-            cube.position.y = radius * Math.sin(phi) * Math.sin(theta);
-            cube.position.z = radius * Math.cos(phi);
-            
-            // Add random rotation speed
-            cube.userData = { 
-                rotX: Math.random() * 0.02, 
-                rotY: Math.random() * 0.02 
-            };
+        // Create a 3x3x3 Grid of Nodes (The Tensor)
+        const gridSize = 3;
+        const separation = 1.2;
+        const offset = (gridSize - 1) * separation * 0.5;
 
-            group.add(cube);
-        });
+        for(let x=0; x<gridSize; x++) {
+            for(let y=0; y<gridSize; y++) {
+                for(let z=0; z<gridSize; z++) {
+                    // Node
+                    const geometry = new THREE.BoxGeometry(0.15, 0.15, 0.15);
+                    const material = new THREE.MeshBasicMaterial({ color: 0x66fcf1 });
+                    const node = new THREE.Mesh(geometry, material);
+                    
+                    node.position.set(
+                        x * separation - offset,
+                        y * separation - offset,
+                        z * separation - offset
+                    );
+                    tensorGroup.add(node);
 
-        scene.add(group);
-        camera.position.z = 8;
+                    // Optional: Connect lines to neighbors (simple visualization)
+                    if(x < gridSize - 1) createLine(node.position, new THREE.Vector3((x+1)*separation - offset, y*separation - offset, z*separation - offset));
+                    if(y < gridSize - 1) createLine(node.position, new THREE.Vector3(x*separation - offset, (y+1)*separation - offset, z*separation - offset));
+                    if(z < gridSize - 1) createLine(node.position, new THREE.Vector3(x*separation - offset, y*separation - offset, (z+1)*separation - offset));
+                }
+            }
+        }
 
-        // Interaction (Mouse)
+        function createLine(v1, v2) {
+            const points = [];
+            points.push(v1);
+            points.push(v2);
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            const material = new THREE.LineBasicMaterial({ color: 0x45a29e, transparent: true, opacity: 0.3 });
+            const line = new THREE.Line(geometry, material);
+            tensorGroup.add(line);
+        }
+
+        scene.add(tensorGroup);
+        camera.position.z = 6;
+
+        // Interaction (Mouse Rotation)
         let mouseX = 0;
         let mouseY = 0;
         document.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX - window.innerWidth / 2) * 0.001;
-            mouseY = (e.clientY - window.innerHeight / 2) * 0.001;
+            mouseX = (e.clientX - window.innerWidth / 2) * 0.0005;
+            mouseY = (e.clientY - window.innerHeight / 2) * 0.0005;
         });
 
         function animate3D() {
             requestAnimationFrame(animate3D);
             
-            group.rotation.y += 0.005;
-            group.rotation.x += 0.002;
+            // Auto rotation
+            tensorGroup.rotation.y += 0.003;
+            tensorGroup.rotation.x += 0.001;
 
-            // React to mouse
-            group.rotation.y += mouseX * 0.1;
-            group.rotation.x += mouseY * 0.1;
-
-            group.children.forEach(child => {
-                child.rotation.x += child.userData.rotX;
-                child.rotation.y += child.userData.rotY;
-            });
+            // Interactive rotation
+            tensorGroup.rotation.y += mouseX * 0.05;
+            tensorGroup.rotation.x += mouseY * 0.05;
 
             renderer.render(scene, camera);
         }
         animate3D();
         
-        // Handle window resize for 3D
         window.addEventListener('resize', () => {
              const newWidth = container.clientWidth;
              const newHeight = container.clientHeight;
@@ -580,38 +683,36 @@
         chatInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 const command = this.value.toLowerCase().trim();
-                let response = "";
                 
                 // User line
-                chatOutput.innerHTML += `<p style="color: #fff;">user@guest:~$ ${this.value}</p>`;
+                chatOutput.innerHTML += `<p style="color: #fff; margin-top:5px;">guest@gyaneshwar:~$ ${this.value}</p>`;
 
+                let response = "";
                 switch(command) {
                     case 'email':
-                        response = "Initiating mail protocol to: Mggyaneshwarraol@gmail.com... (Opening client)";
-                        setTimeout(() => { window.location.href = "mailto:Mggyaneshwarraol@gmail.com"; }, 1500);
+                        response = "Opening mail client for: Mggyaneshwarraol@gmail.com";
+                        setTimeout(() => { window.location.href = "mailto:Mggyaneshwarraol@gmail.com"; }, 1000);
                         break;
                     case 'github':
-                        response = "Accessing repositories... Check 'Key Projects' above.";
-                        break;
-                    case 'status':
-                        response = "Current Status: Active @ Indusvision.ai | Open for collaboration.";
+                        response = "Github Profile: github.com/Gyaneshwar17. (Opening...)";
+                        setTimeout(() => { window.open("https://github.com/Gyaneshwar17", "_blank"); }, 1000);
                         break;
                     case 'skills':
-                        response = "Loading Tensor Graph... Python, C++, Computer Vision, GenAI, 3D Modelling.";
+                        response = "Core: Python, C++, PyTorch, Computer Vision, GNNs, Unity, Blender.";
                         break;
                     case 'help':
-                        response = "Commands: email, github, status, skills, clear";
+                        response = "Commands: email, github, skills, clear";
                         break;
                     case 'clear':
                         chatOutput.innerHTML = "";
                         response = "> Console cleared.";
                         break;
                     default:
-                        response = `Command '${command}' not recognized. Type 'help' for assistance.`;
+                        response = `Command not found: ${command}. Type 'help'.`;
                 }
 
                 if(command !== 'clear') {
-                    chatOutput.innerHTML += `<p>> ${response}</p>`;
+                    chatOutput.innerHTML += `<p style="margin-bottom: 10px;">> ${response}</p>`;
                 }
                 
                 this.value = '';
@@ -619,7 +720,7 @@
             }
         });
 
-        // --- 4. RESUME MODAL ---
+        // --- 4. MODAL LOGIC ---
         function openResume() {
             document.getElementById('resume-modal').style.display = 'flex';
         }
@@ -627,9 +728,8 @@
             document.getElementById('resume-modal').style.display = 'none';
         }
         window.onclick = function(event) {
-            const modal = document.getElementById('resume-modal');
-            if (event.target == modal) {
-                modal.style.display = "none";
+            if (event.target == document.getElementById('resume-modal')) {
+                closeResume();
             }
         }
     </script>
