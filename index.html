@@ -1,46 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G. Gyaneshwar Rao | AI/ML Engineer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>G. Gyaneshwar Rao | AI/ML Research Engineer</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <style>
         :root {
-            /* Lighter "Void" Theme */
-            --bg-color: #0b0c10;
-            --text-primary: #c5c6c7;
-            --neon-cyan: #66fcf1;
-            --neon-blue: #45a29e;
-            --glass-panel: rgba(11, 12, 16, 0.6); 
-            --glass-border: rgba(102, 252, 241, 0.3);
-            --font-display: 'Orbitron', sans-serif;
-            --font-body: 'Rajdhani', sans-serif;
+            --bg-color: #ffffff;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-light: #eff6ff;
+            --border-color: #e2e8f0;
+            --gold: #f59e0b;
+            --silver: #64748b;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --card-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-primary);
-            font-family: var(--font-body);
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* --- Canvas Background --- */
-        #neural-canvas {
+        /* --- Background Animation --- */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -2;
+            animation: bgMove 20s linear infinite;
+        }
+
+        @keyframes bgMove {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        #canvas-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.4; /* Made lighter as requested */
+            opacity: 0.4;
         }
 
         /* --- Navigation --- */
@@ -48,495 +80,800 @@
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 1.5rem 5%;
+            padding: 1.2rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 100;
-            background: rgba(11, 12, 16, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
         .logo {
-            font-family: var(--font-display);
-            font-weight: 700;
+            font-weight: 800;
             font-size: 1.2rem;
-            color: var(--neon-cyan);
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(102, 252, 241, 0.5);
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .nav-links button {
-            background: none;
-            border: 1px solid var(--neon-cyan);
-            color: var(--neon-cyan);
-            padding: 0.5rem 1.2rem;
-            margin-left: 1rem;
-            cursor: pointer;
-            font-family: var(--font-display);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            transition: 0.3s;
-            border-radius: 2px;
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
         }
 
-        .nav-links button:hover {
-            background: var(--neon-cyan);
-            color: #000;
-            box-shadow: 0 0 15px var(--neon-cyan);
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* --- Layout --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section {
+            padding: 5rem 0;
         }
 
         /* --- Hero Section --- */
         .hero {
-            height: 100vh;
+            min-height: 85vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-            position: relative;
+            padding-top: 80px;
         }
 
         .hero h1 {
-            font-family: var(--font-display);
-            font-size: 4rem;
+            font-size: 4.2rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1.5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                filter: hue-rotate(0deg);
+            }
+
+            50% {
+                filter: hue-rotate(10deg);
+            }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #fff;
-            text-transform: uppercase;
+            border: none;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transition: left 0.3s;
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+
+        /* --- NTIRE Spotlight --- */
+        .spotlight-card {
+            background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+            border: 2px solid transparent;
+            background-image:
+                linear-gradient(white, white),
+                linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .spotlight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(50%, -50%);
+        }
+
+        .spotlight-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+
+        .spotlight-badge {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            color: #92400e;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+            border: 1px solid #fbbf24;
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.2rem;
+            transition: transform 0.3s;
+        }
+
+        .stat-item:hover h3 {
+            transform: scale(1.1);
+        }
+
+        .stat-item p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* --- Section Headers --- */
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .divider {
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+
+        /* --- Experience --- */
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 3rem;
+            transition: all 0.3s;
+        }
+
+        .timeline-item:hover {
+            padding-left: 1rem;
+            border-left: 3px solid var(--accent-purple);
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .role-meta {
+            min-width: 180px;
+        }
+
+        .role-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .role-content h3 {
+            font-size: 1.3rem;
             margin-bottom: 0.5rem;
         }
 
-        .hero h2 {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            color: var(--neon-cyan);
-            margin-bottom: 2rem;
-            letter-spacing: 3px;
+        .company-name {
+            color: var(--accent-blue);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: block;
         }
 
-        .achievement-badge {
-            margin-top: 1.5rem;
-            padding: 0.8rem 1.5rem;
-            border: 1px solid var(--neon-blue);
-            background: rgba(69, 162, 158, 0.1);
-            border-radius: 50px;
-            color: #fff;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .role-content ul {
+            list-style: none;
         }
 
-        /* --- 3D Tensor Section --- */
-        #tensor-section {
-            height: 70vh;
+        .role-content li {
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            border-top: 1px solid var(--glass-border);
-            border-bottom: 1px solid var(--glass-border);
-            background: radial-gradient(circle at center, rgba(31,40,51,0.4) 0%, rgba(11,12,16,1) 70%);
+            padding-left: 20px;
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
         }
-        
-        .tensor-label {
+
+        .role-content li::before {
+            content: "•";
+            color: var(--accent-blue);
             position: absolute;
-            bottom: 20px;
-            right: 20px;
-            text-align: right;
-            pointer-events: none;
+            left: 0;
+            font-weight: bold;
         }
-        .tensor-label h3 { color: var(--neon-cyan); font-family: var(--font-display); }
 
         /* --- Projects Grid --- */
-        .section-header {
-            text-align: center;
-            padding: 5rem 0 3rem 0;
-        }
-        
-        .section-header h2 {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            color: #fff;
-            display: inline-block;
-            border-bottom: 3px solid var(--neon-cyan);
-            padding-bottom: 0.5rem;
-        }
-
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            padding: 0 10% 5rem 10%;
         }
 
         .project-card {
-            background: rgba(31, 40, 51, 0.4);
-            border: 1px solid #333;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             padding: 2rem;
-            border-radius: 8px;
-            transition: all 0.4s ease;
-            position: relative;
-            backdrop-filter: blur(5px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
         }
 
         .project-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 25px rgba(102, 252, 241, 0.15);
-            background: rgba(31, 40, 51, 0.6);
+            border-color: var(--accent-purple);
+            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-8px);
         }
 
-        .project-card h3 {
-            font-family: var(--font-display);
-            color: #fff;
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-        }
-
-        .project-card p {
-            font-size: 0.95rem;
-            color: #aaa;
-            margin-bottom: 1.5rem;
-        }
-
-        .tags {
+        .tech-tags {
+            margin: 1rem 0;
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 1.5rem;
+            gap: 8px;
         }
 
         .tag {
-            font-size: 0.75rem;
-            padding: 3px 8px;
-            border: 1px solid var(--neon-blue);
-            color: var(--neon-cyan);
-            border-radius: 4px;
-            font-family: monospace;
-        }
-
-        .code-btn {
-            display: inline-block;
-            text-decoration: none;
-            color: #000;
-            background: var(--neon-cyan);
-            padding: 0.5rem 1rem;
-            font-family: var(--font-display);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            text-align: center;
-            border-radius: 2px;
-            transition: 0.3s;
-            margin-top: auto;
-        }
-
-        .code-btn:hover {
-            background: #fff;
-            box-shadow: 0 0 10px #fff;
-        }
-
-        /* --- Uplink Terminal --- */
-        .contact-section {
-            padding: 4rem 10%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: linear-gradient(0deg, #000 0%, var(--bg-color) 100%);
-        }
-
-        .terminal-window {
-            width: 100%;
-            max-width: 700px;
-            background: #000;
-            border: 1px solid #333;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            color: #1e40af;
+            padding: 6px 12px;
             border-radius: 6px;
-            box-shadow: 0 0 40px rgba(0,0,0,0.8);
-            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            border: 1px solid #bfdbfe;
+            transition: all 0.2s;
+        }
+
+        .tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+        }
+
+        .project-btn {
+            text-align: center;
+            border: 1px solid var(--border-color);
+            padding: 0.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: auto;
+            transition: 0.2s;
+        }
+
+        .project-btn:hover {
+            border-color: var(--text-primary);
+            background: #f9fafb;
+        }
+
+        /* Project Link Indicator */
+        .project-link-indicator {
+            margin-top: auto;
+            padding: 0.75rem;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent-purple);
+            border-top: 1px solid var(--border-color);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        a.project-card:hover .project-link-indicator {
+            color: #fff;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-top-color: transparent;
+        }
+
+        /* Enhanced interactive cursor */
+        a.project-card {
+            cursor: pointer;
+        }
+
+        a.project-card h3 {
+            transition: color 0.3s;
+        }
+
+        a.project-card:hover h3 {
+            color: var(--accent-purple);
+        }
+
+        /* --- Education & Certs --- */
+        .certs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .cert-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 1.5rem;
+            background: #fafafa;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* --- Terminal --- */
+        .terminal-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #111;
+            /* Dark terminal */
+            border-radius: 8px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            font-family: 'JetBrains Mono', monospace;
+            overflow: hidden;
+            margin-top: 2rem;
+            transition: transform 0.3s;
+        }
+
+        .terminal-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
         }
 
         .terminal-header {
-            background: #1c1c1c;
-            padding: 0.8rem;
+            background: #222;
+            padding: 10px 15px;
             display: flex;
             gap: 8px;
-            border-bottom: 1px solid #333;
+            align-items: center;
         }
 
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .red { background: #ff5f56; }
-        .yellow { background: #ffbd2e; }
-        .green { background: #27c93f; }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .red {
+            background: #ff5f56;
+        }
+
+        .yellow {
+            background: #ffbd2e;
+        }
+
+        .green {
+            background: #27c93f;
+        }
 
         .terminal-body {
-            padding: 1.5rem;
-            height: 350px;
+            padding: 20px;
+            height: 300px;
             overflow-y: auto;
-            color: var(--neon-cyan);
-            font-size: 0.95rem;
+            color: #ccc;
+            font-size: 0.9rem;
         }
 
-        .input-line {
-            display: flex;
-            border-top: 1px solid #333;
-            padding: 1rem;
-            background: #050505;
-        }
-
-        .input-line span { color: var(--neon-blue); margin-right: 10px; user-select: none;}
-        .input-line input {
+        .cmd-input {
             background: transparent;
             border: none;
             color: #fff;
-            width: 100%;
-            font-family: 'Courier New', monospace;
-            font-size: 1rem;
+            width: 70%;
+            font-family: inherit;
             outline: none;
+            margin-left: 10px;
         }
 
-        /* --- Resume Modal --- */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(5px);
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: 0.8s ease-out;
         }
 
-        .modal-content {
-            background: #111;
-            width: 90%;
-            max-width: 800px;
-            height: 85%;
-            overflow-y: auto;
-            padding: 3rem;
-            border: 1px solid var(--neon-cyan);
-            position: relative;
-            color: #ccc;
-            box-shadow: 0 0 50px rgba(102, 252, 241, 0.1);
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
-
-        .close-modal {
-            position: absolute;
-            top: 15px; right: 25px;
-            font-size: 2.5rem;
-            cursor: pointer;
-            color: var(--neon-cyan);
-            transition: 0.3s;
-        }
-        .close-modal:hover { transform: rotate(90deg); color: #fff; }
-
-        .resume-header { border-bottom: 1px solid #333; margin-bottom: 20px; padding-bottom: 20px; }
-        .resume-header h2 { color: #fff; font-family: var(--font-display); font-size: 2rem; }
-        .resume-section { margin-bottom: 25px; }
-        .resume-section h4 { color: var(--neon-cyan); margin-bottom: 10px; font-family: var(--font-display); letter-spacing: 1px; border-left: 3px solid var(--neon-cyan); padding-left: 10px;}
-        .resume-item { margin-bottom: 15px; }
-        .resume-item strong { color: #fff; display: block; font-size: 1.1rem; }
-        .resume-item em { color: #888; font-style: normal; font-size: 0.9rem; }
-        .resume-item ul { margin-left: 20px; margin-top: 5px; color: #bbb; }
-        .resume-item li { margin-bottom: 5px; }
 
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .projects-grid { padding: 0 5% 5rem 5%; }
-            .modal-content { padding: 1.5rem; width: 95%; }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .role-meta {
+                margin-bottom: 1rem;
+            }
         }
     </style>
 </head>
+
 <body>
 
-    <canvas id="neural-canvas"></canvas>
+    <canvas id="canvas-bg"></canvas>
 
     <nav>
         <div class="logo">G. GYANESHWAR RAO</div>
         <div class="nav-links">
-            <button onclick="document.getElementById('projects').scrollIntoView()">Projects</button>
-            <button onclick="openResume()">View CV</button>
+            <a href="#research">Research</a>
+            <a href="#experience">Experience</a>
+            <a href="#projects">Work</a>
+            <a href="#contact">Terminal</a>
         </div>
     </nav>
 
-    <section class="hero">
-        <h1>G. Gyaneshwar Rao</h1>
-        <h2>AI/ML Engineer</h2> <p style="color: #888; max-width: 600px;">
-            Specializing in Deep Learning, Computer Vision, and 3D Asset Generation.
-            Currently optimizing edge AI at Indusvision.
-        </p>
-        
-        <div class="achievement-badge">
-            <i class="fas fa-trophy" style="color: var(--neon-cyan);"></i>
-            <span>Ranked #7 Global: NTIRE 2025 Super-Resolution Challenge</span>
-        </div>
-    </section>
-
-    <section id="tensor-section">
-        <div class="tensor-label">
-            <h3>MULTIDIMENSIONAL<br>SKILL TENSOR</h3>
-            <p style="font-size: 0.8rem; color: #666;">Hover to rotate</p>
-        </div>
+    <div class="container">
+        <section class="hero reveal">
+            <h1>AI/ML Engineer</h1>
+            <p>
+                Specializing in Computer Vision, Deep Learning, and 3D Asset Generation.
+                Currently optimizing edge AI pipelines and researching 4D dynamics.
+            </p>
+            <div style="margin-top: 1.5rem;">
+                <a href="#projects" class="btn">View Technical Work</a>
+            </div>
         </section>
 
-    <section id="projects">
-        <div class="section-header">
-            <h2>TECHNICAL PROJECTS</h2>
-        </div>
-        
-        <div class="projects-grid">
-            <div class="project-card">
-                <div>
-                    <h3>Dynamic Cloth Simulation</h3>
-                    <p>Research project extending HOOD's GNN framework. Developed a self-collision loss function to prevent fabric interpenetration during complex dynamics.</p>
-                    <div class="tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">GNN</span>
-                        <span class="tag">Physics Sim</span>
+        <section id="research" class="reveal">
+            <div class="spotlight-card">
+                <div class="spotlight-badge"><i class="fas fa-trophy"></i> GLOBAL RECOGNITION</div>
+                <h2>NTIRE 2025 Challenge Results</h2>
+                <p style="color: var(--text-secondary); margin-top: 10px;">
+                    Ranked among top teams globally in the New Trends in Image Restoration and Enhancement (NTIRE)
+                    challenge.
+                </p>
+
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <h3 style="color: var(--gold);">#7</h3>
+                        <p>Global Rank<br><strong>Image Super-Resolution</strong></p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 style="color: var(--silver);">#10</h3>
+                        <p>Global Rank<br><strong>Image Denoising</strong></p>
                     </div>
                 </div>
-                <a href="https://github.com/Gyaneshwar17/YOUR-REPO-HERE" target="_blank" class="code-btn">
-                    <i class="fab fa-github"></i> Source Code
-                </a>
+            </div>
+        </section>
+
+        <section id="experience">
+            <div class="section-header reveal">
+                <h2>Professional Experience</h2>
+                <div class="divider"></div>
             </div>
 
-            <div class="project-card">
-                <div>
-                    <h3>GenAI Game Assets</h3>
-                    <p>Pipeline generating 360-degree 3D assets from single 2D images. Utilized Zero123 and Trellis to create realistic textured models for game engines.</p>
-                    <div class="tags">
-                        <span class="tag">Generative AI</span>
-                        <span class="tag">Zero123</span>
-                        <span class="tag">Computer Vision</span>
-                    </div>
+            <div class="timeline-item reveal">
+                <div class="role-meta">
+                    <span class="role-date">Aug 2025 - Present</span>
                 </div>
-                <a href="https://github.com/Gyaneshwar17/YOUR-REPO-HERE" target="_blank" class="code-btn">
-                    <i class="fab fa-github"></i> Source Code
-                </a>
-            </div>
-
-            <div class="project-card">
-                <div>
-                    <h3>Low-Light Enhancement</h3>
-                    <p>Implemented Retinex Theory with VGG-16 perceptual loss to decompose images into reflectance and illumination maps, significantly improving brightness.</p>
-                    <div class="tags">
-                        <span class="tag">PyTorch</span>
-                        <span class="tag">Image Processing</span>
-                        <span class="tag">VGG-16</span>
-                    </div>
-                </div>
-                <a href="https://github.com/Gyaneshwar17/YOUR-REPO-HERE" target="_blank" class="code-btn">
-                    <i class="fab fa-github"></i> Source Code
-                </a>
-            </div>
-
-            <div class="project-card">
-                <div>
-                    <h3>3D Underwater Scene</h3>
-                    <p>Created realistic underwater environments using Unity & Unreal Engine. Modeled detailed sea life and landscapes for educational tools.</p>
-                    <div class="tags">
-                        <span class="tag">Unity</span>
-                        <span class="tag">Unreal Engine</span>
-                        <span class="tag">3D Modelling</span>
-                    </div>
-                </div>
-                <a href="https://github.com/Gyaneshwar17/YOUR-REPO-HERE" target="_blank" class="code-btn">
-                    <i class="fab fa-github"></i> Source Code
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section class="contact-section">
-        <h2 style="font-family: var(--font-display); color: #fff; margin-bottom: 2rem;">UPLINK TERMINAL</h2>
-        <div class="terminal-window">
-            <div class="terminal-header">
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
-                <span style="color: #666; font-size: 0.8rem; margin-left: 10px;">bash --login</span>
-            </div>
-            <div class="terminal-body" id="chat-output">
-                <p>> System initialized...</p>
-                <p>> User: G. Gyaneshwar Rao [Authenticated]</p>
-                <p>> Available commands: <span style="color: #fff;">email</span>, <span style="color: #fff;">github</span>, <span style="color: #fff;">skills</span>, <span style="color: #fff;">clear</span></p>
-                <br>
-            </div>
-            <div class="input-line">
-                <span>guest@gyaneshwar:~$</span>
-                <input type="text" id="chat-input" placeholder="Type a command..." autocomplete="off">
-            </div>
-        </div>
-    </section>
-
-    <div id="resume-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeResume()">&times;</span>
-            <div class="resume-header">
-                <h2>G. Gyaneshwar Rao</h2>
-                <p>Hubli, India | +91 7019918559 | Mggyaneshwarraol@gmail.com</p>
-                <p style="color: var(--neon-cyan); margin-top: 5px;">AI/ML Engineer | Deep Learning Specialist</p>
-            </div>
-            
-            <div class="resume-section">
-                <h4>EXPERIENCE</h4>
-                <div class="resume-item">
-                    <strong>AI/ML Engineer @ Indusvision.ai</strong>
-                    <em>Aug 2025 - Present</em>
+                <div class="role-content">
+                    <h3>AI/ML Engineer</h3>
+                    <span class="company-name">Indusvision.ai</span>
                     <ul>
-                        <li>Developing deep learning pipelines for detection, tracking, and scene understanding.</li>
+                        <li>Developing and deploying Machine Learning models for real-time visual
+                            intelligence applications.</li>
+                        <li>Building deep learning pipelines for detection, tracking, and scene
+                            understanding.</li>
                         <li>Optimizing models for edge devices and production environments.</li>
-                        <li>Deploying real-time visual intelligence applications.</li>
                     </ul>
                 </div>
-                <div class="resume-item">
-                    <strong>Research Intern @ CEVI, KLE Tech</strong>
-                    <em>Dec 2021 - July 2025</em>
+            </div>
+
+            <div class="timeline-item reveal">
+                <div class="role-meta">
+                    <span class="role-date">Dec 2021 - July 2025</span>
+                </div>
+                <div class="role-content">
+                    <h3>Research Intern</h3>
+                    <span class="company-name">Center of Excellence in Visual Intelligence
+                        (CEVI)</span>
                     <ul>
-                        <li>Research on 4D cloth dynamics and realistic fabric simulation.</li>
-                        <li>Explored methods to convert 2D images into 3D models (GenAI).</li>
+                        <li>Conducted research on 4D cloth dynamics and realistic fabric
+                            simulation.</li>
+                        <li>Worked on 3D scene generation and game asset building pipelines.</li>
+                        <li>Explored methods to convert 2D images into 3D models.</li>
                     </ul>
                 </div>
             </div>
+        </section>
 
-            <div class="resume-section">
-                <h4>EDUCATION</h4>
-                <div class="resume-item">
-                    <strong>B.E. Electronics & Communication</strong>
-                    <em>KLE Technological University | CGPA: 7.75</em>
+        <section id="projects">
+            <div class="section-header reveal">
+                <h2>Technical Projects</h2>
+                <div class="divider"></div>
+            </div>
+
+            <div class="projects-grid">
+                <a href="https://github.com/Gyaneshwar17/Self-Collision_Aware_Dynamic_Cloth_Simulation" target="_blank"
+                    class="project-card reveal" style="text-decoration: none; color: inherit;">
+                    <div>
+                        <h3>Dynamic Cloth Simulation</h3>
+                        <div class="tech-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">GNN</span>
+                            <span class="tag">Physics Sim</span>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom:1rem;">
+                            Extended HOOD's GNN framework. Developed a novel self-collision loss function to prevent
+                            fabric interpenetration during dynamic motion.
+                        </p>
+                    </div>
+                    <div class="project-link-indicator"><i class="fab fa-github"></i> View on GitHub →</div>
+                </a>
+
+                <a href="https://github.com/Gyaneshwar17/Retinex-based-LLIE" target="_blank" class="project-card reveal"
+                    style="text-decoration: none; color: inherit;">
+                    <div>
+                        <h3>Low-Light Enhancement</h3>
+                        <div class="tech-tags">
+                            <span class="tag">PyTorch</span>
+                            <span class="tag">VGG-16</span>
+                            <span class="tag">Retinex</span>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom:1rem;">
+                            Implemented Retinex Theory with machine learning. Designed a custom perceptual loss using
+                            VGG-16 to decompose images into reflectance maps.
+                        </p>
+                    </div>
+                    <div class="project-link-indicator"><i class="fab fa-github"></i> View on GitHub →</div>
+                </a>
+
+                <a href="https://github.com/Gyaneshwar17/-Multimodal-Fusion-for-Person-Identification" target="_blank"
+                    class="project-card reveal" style="text-decoration: none; color: inherit;">
+                    <div>
+                        <h3>Multimodal Fusion for Person Identification</h3>
+                        <div class="tech-tags">
+                            <span class="tag">VGG16</span>
+                            <span class="tag">Deep Learning</span>
+                            <span class="tag">Multimodal</span>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom:1rem;">
+                            My first machine learning project exploring multimodal fusion for person identification
+                            using face and fingerprint data. Combines VGG16 architecture to enhance identification
+                            accuracy.
+                        </p>
+                    </div>
+                    <div class="project-link-indicator"><i class="fab fa-github"></i> View on GitHub →</div>
+                </a>
+
+                <div class="project-card reveal" style="cursor: default;">
+                    <div>
+                        <h3>3D Underwater Experience</h3>
+                        <div class="tech-tags">
+                            <span class="tag">Unity</span>
+                            <span class="tag">Unreal</span>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom:1rem;">
+                            Built a realistic underwater scene using Unity. Modeled detailed sea life and landscapes for
+                            an educational tool.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header reveal">
+                <h2>Education & Certifications</h2>
+                <div class="divider"></div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 3rem;" class="reveal">
+                <div>
+                    <h3 style="margin-bottom: 1rem;">Education</h3>
+                    <div
+                        style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <strong>KLE Technological University</strong><br>
+                        <span style="color: var(--text-secondary);">B.E. Electronics &
+                            Communication</span><br>
+                        <span style="font-size: 0.9rem; color: var(--accent-blue);">CGPA:
+                            7.75</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem;">Skills</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <span class="tag" style="background: #e2e8f0; color: #333;">Python</span>
+                        <span class="tag" style="background: #e2e8f0; color: #333;">C++</span>
+                        <span class="tag" style="background: #e2e8f0; color: #333;">PyTorch</span>
+                        <span class="tag" style="background: #e2e8f0; color: #333;">Computer Vision</span>
+                        <span class="tag" style="background: #e2e8f0; color: #333;">Unity</span>
+                        <span class="tag" style="background: #e2e8f0; color: #333;">Blender</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="resume-section">
-                <h4>TECHNICAL SKILLS</h4>
-                <p><strong>Languages:</strong> Python, C++, C</p>
-                <p><strong>Core:</strong> PyTorch, Computer Vision, Deep Learning, GNNs</p>
-                <p><strong>3D Tools:</strong> Unity, Unreal Engine, Blender</p>
-                <p><strong>DevOps/Tools:</strong> Linux, Git, VS Code, MySQL</p>
+            <div class="certs-grid reveal">
+                <div class="cert-item">
+                    <i class="fab fa-google" style="font-size: 1.5rem;"></i>
+                    <div>
+                        <strong>Google Cloud</strong>
+                        <p style="font-size: 0.85rem; color: #666;">Intro to Generative AI</p>
+                    </div>
+                </div>
+                <div class="cert-item">
+                    <i class="fab fa-ibm" style="font-size: 1.5rem;"></i>
+                    <div>
+                        <strong>IBM</strong>
+                        <p style="font-size: 0.85rem; color: #666;">Python for Data Science & AI</p>
+                    </div>
+                </div>
+                <div class="cert-item">
+                    <i class="fas fa-database" style="font-size: 1.5rem;"></i>
+                    <div>
+                        <strong>IBM</strong>
+                        <p style="font-size: 0.85rem; color: #666;">SQL & Relational Databases</p>
+                    </div>
+                </div>
             </div>
-            
-            <div class="resume-section">
-                <h4>ACHIEVEMENTS</h4>
-                <ul>
-                    <li><strong>Rank #7:</strong> NTIRE 2025 Image Super-Resolution Challenge (Top 25 teams).</li>
-                    <li><strong>Rank #10:</strong> NTIRE 2025 Image Denoising Challenge.</li>
-                </ul>
+        </section>
+
+        <section id="contact" style="padding-bottom: 3rem;">
+            <h2 class="section-title reveal" style="text-align: center; width: 100%;">Connect via Uplink</h2>
+            <div class="terminal-container reveal">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                    <span
+                        style="color: #666; font-size: 0.8rem; margin-left: 10px;">guest@gyaneshwar-portfolio:~$</span>
+                </div>
+                <div class="terminal-body" id="chat-output">
+                    <p>> System initialized...</p>
+                    <p>> Welcome. I am Gyaneshwar's automated assistant.</p>
+                    <p>> Type <span style="color: #fff;">email</span> to open mail client.</p>
+                    <p>> Type <span style="color: #fff;">github</span> to view profile.</p>
+                </div>
+                <div
+                    style="border-top: 1px solid #333; padding: 15px; background: #151515; display: flex; align-items: center;">
+                    <span style="color: #27c93f;">user@host:~$</span>
+                    <input type="text" id="chat-input" class="cmd-input" placeholder="Enter command..."
+                        autocomplete="off">
+                </div>
             </div>
-        </div>
+        </section>
     </div>
 
     <script>
-        // --- 1. NEURAL BACKGROUND (Lighter) ---
-        const canvas = document.getElementById('neural-canvas');
+        // --- 1. Background Animation (Scientific Nodes) ---
+        const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
         let width, height;
-        let particles = [];
-        
+
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
@@ -544,194 +881,105 @@
         window.addEventListener('resize', resize);
         resize();
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.3; // Slower movement
-                this.vy = (Math.random() - 0.5) * 0.3;
-                this.size = Math.random() * 2;
-            }
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
-            }
-            draw() {
-                ctx.fillStyle = 'rgba(102, 252, 241, 0.3)'; // Cyan, low opacity
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
+        const particles = [];
+        for (let i = 0; i < 50; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                size: Math.random() * 2
+            });
         }
 
-        // Reduced particle count for cleaner look
-        for (let i = 0; i < 50; i++) particles.push(new Particle());
-
-        function animateCanvas() {
+        function animate() {
             ctx.clearRect(0, 0, width, height);
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-                for (let j = i; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx*dx + dy*dy);
-                    if (distance < 120) {
+            ctx.fillStyle = "#94a3b8";
+
+            particles.forEach((p, i) => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > width) p.vx *= -1;
+                if (p.y < 0 || p.y > height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = p.x - particles[j].x;
+                    const dy = p.y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 150) {
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(102, 252, 241, ${0.15 - distance/800})`; // Very faint lines
+                        ctx.strokeStyle = `rgba(148, 163, 184, ${0.15 - dist / 1000})`;
                         ctx.lineWidth = 0.5;
-                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.moveTo(p.x, p.y);
                         ctx.lineTo(particles[j].x, particles[j].y);
                         ctx.stroke();
                     }
                 }
-            }
-            requestAnimationFrame(animateCanvas);
+            });
+            requestAnimationFrame(animate);
         }
-        animateCanvas();
+        animate();
 
-        // --- 2. THREE.JS TENSOR (Geometric Grid) ---
-        const scene = new THREE.Scene();
-        // Transparent background for Three.js
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / (window.innerHeight * 0.7), 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        
-        const container = document.getElementById('tensor-section');
-        renderer.setSize(container.clientWidth, container.clientHeight);
-        container.appendChild(renderer.domElement);
-
-        const tensorGroup = new THREE.Group();
-        
-        // Create a 3x3x3 Grid of Nodes (The Tensor)
-        const gridSize = 3;
-        const separation = 1.2;
-        const offset = (gridSize - 1) * separation * 0.5;
-
-        for(let x=0; x<gridSize; x++) {
-            for(let y=0; y<gridSize; y++) {
-                for(let z=0; z<gridSize; z++) {
-                    // Node
-                    const geometry = new THREE.BoxGeometry(0.15, 0.15, 0.15);
-                    const material = new THREE.MeshBasicMaterial({ color: 0x66fcf1 });
-                    const node = new THREE.Mesh(geometry, material);
-                    
-                    node.position.set(
-                        x * separation - offset,
-                        y * separation - offset,
-                        z * separation - offset
-                    );
-                    tensorGroup.add(node);
-
-                    // Optional: Connect lines to neighbors (simple visualization)
-                    if(x < gridSize - 1) createLine(node.position, new THREE.Vector3((x+1)*separation - offset, y*separation - offset, z*separation - offset));
-                    if(y < gridSize - 1) createLine(node.position, new THREE.Vector3(x*separation - offset, (y+1)*separation - offset, z*separation - offset));
-                    if(z < gridSize - 1) createLine(node.position, new THREE.Vector3(x*separation - offset, y*separation - offset, (z+1)*separation - offset));
+        // --- 2. Scroll Reveal ---
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 100;
+            revealElements.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
                 }
-            }
-        }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
 
-        function createLine(v1, v2) {
-            const points = [];
-            points.push(v1);
-            points.push(v2);
-            const geometry = new THREE.BufferGeometry().setFromPoints(points);
-            const material = new THREE.LineBasicMaterial({ color: 0x45a29e, transparent: true, opacity: 0.3 });
-            const line = new THREE.Line(geometry, material);
-            tensorGroup.add(line);
-        }
-
-        scene.add(tensorGroup);
-        camera.position.z = 6;
-
-        // Interaction (Mouse Rotation)
-        let mouseX = 0;
-        let mouseY = 0;
-        document.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX - window.innerWidth / 2) * 0.0005;
-            mouseY = (e.clientY - window.innerHeight / 2) * 0.0005;
-        });
-
-        function animate3D() {
-            requestAnimationFrame(animate3D);
-            
-            // Auto rotation
-            tensorGroup.rotation.y += 0.003;
-            tensorGroup.rotation.x += 0.001;
-
-            // Interactive rotation
-            tensorGroup.rotation.y += mouseX * 0.05;
-            tensorGroup.rotation.x += mouseY * 0.05;
-
-            renderer.render(scene, camera);
-        }
-        animate3D();
-        
-        window.addEventListener('resize', () => {
-             const newWidth = container.clientWidth;
-             const newHeight = container.clientHeight;
-             renderer.setSize(newWidth, newHeight);
-             camera.aspect = newWidth / newHeight;
-             camera.updateProjectionMatrix();
-        });
-
-        // --- 3. CHATBOT TERMINAL ---
+        // --- 3. Terminal Logic ---
         const chatInput = document.getElementById('chat-input');
         const chatOutput = document.getElementById('chat-output');
 
         chatInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 const command = this.value.toLowerCase().trim();
-                
-                // User line
-                chatOutput.innerHTML += `<p style="color: #fff; margin-top:5px;">guest@gyaneshwar:~$ ${this.value}</p>`;
+                chatOutput.innerHTML += `<p style="margin-top:10px; color:#fff;">user@host:~$ ${this.value}</p>`;
 
                 let response = "";
-                switch(command) {
+                switch (command) {
                     case 'email':
-                        response = "Opening mail client for: Mggyaneshwarraol@gmail.com";
+                        response = "Opening mail client: Mggyaneshwarraol@gmail.com";
                         setTimeout(() => { window.location.href = "mailto:Mggyaneshwarraol@gmail.com"; }, 1000);
                         break;
                     case 'github':
-                        response = "Github Profile: github.com/Gyaneshwar17. (Opening...)";
+                        response = "Opening GitHub Profile...";
                         setTimeout(() => { window.open("https://github.com/Gyaneshwar17", "_blank"); }, 1000);
                         break;
-                    case 'skills':
-                        response = "Core: Python, C++, PyTorch, Computer Vision, GNNs, Unity, Blender.";
-                        break;
                     case 'help':
-                        response = "Commands: email, github, skills, clear";
+                        response = "Commands: email, github, clear";
                         break;
                     case 'clear':
                         chatOutput.innerHTML = "";
-                        response = "> Console cleared.";
+                        response = "Console cleared.";
                         break;
                     default:
-                        response = `Command not found: ${command}. Type 'help'.`;
+                        response = `Command '${command}' not found. Type 'help'.`;
                 }
 
-                if(command !== 'clear') {
-                    chatOutput.innerHTML += `<p style="margin-bottom: 10px;">> ${response}</p>`;
+                if (command !== 'clear') {
+                    chatOutput.innerHTML += `<p style="color: #48cae4;">> ${response}</p>`;
                 }
-                
+
                 this.value = '';
                 chatOutput.scrollTop = chatOutput.scrollHeight;
             }
         });
-
-        // --- 4. MODAL LOGIC ---
-        function openResume() {
-            document.getElementById('resume-modal').style.display = 'flex';
-        }
-        function closeResume() {
-            document.getElementById('resume-modal').style.display = 'none';
-        }
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('resume-modal')) {
-                closeResume();
-            }
-        }
     </script>
 </body>
+
 </html>
