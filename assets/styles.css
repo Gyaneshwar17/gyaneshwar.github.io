@@ -1,80 +1,79 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
-
 :root {
-  --accent: #00eaff;
-  --dark: #10141b;
-  --light: #e8faff;
+  --neon1: #0ffcff;
+  --neon2: #ff2fff;
+  --neon3: #3affba;
+  --light-bg: #eef6ff;
+  --dark-bg: #0d1117;
+  --text-light: #111;
+  --text-dark: #e9faff;
 }
 
 body {
-  margin: 0;
+  margin:0;
   font-family: Inter, sans-serif;
-  background: var(--dark);
-  color: var(--light);
+  overflow-x:hidden;
+  background: var(--light-bg);
+  color: var(--text-light);
 }
 
-#hero {
-  position: relative;
-  height: 100vh;
+[data-theme="dark"] {
+  background: var(--dark-bg);
+  color: var(--text-dark);
 }
 
-#network {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+header {
+  position:fixed;
+  top:0; left:0; right:0;
+  padding:12px 28px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:20;
+  backdrop-filter: blur(10px);
 }
 
-.hero-text {
-  position: absolute;
-  bottom: 20%;
-  left: 10%;
+#gradient-bg {
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background:
+    radial-gradient(circle at 70% 40%, var(--neon1), transparent 60%),
+    radial-gradient(circle at 30% 80%, var(--neon2), transparent 60%),
+    radial-gradient(circle at 10% 20%, var(--neon3), transparent 60%);
+  filter: blur(110px);
+  animation: drift 12s infinite alternate ease-in-out;
 }
 
-.btn {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 8px 16px;
-  border: 1px solid var(--accent);
-  border-radius: 6px;
-  text-decoration: none;
-  color: var(--accent);
+@keyframes drift {
+  0% {transform:scale(1) translate(0,0);}
+  100% {transform:scale(1.4) translate(60px,-40px);}
+}
+
+#neural-bg {
+  position:fixed;
+  inset:0;
+  z-index:-1;
 }
 
 section {
-  padding: 60px 10%;
+  padding:120px 12%;
+  min-height:60vh;
 }
 
-#skills .categories {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+#hero {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  height:100vh;
 }
 
-.card {
-  padding: 8px 14px;
-  border: 1px solid var(--accent);
-  border-radius: 6px;
-  font-size: 14px;
+#skills {
+  height:100vh;
+  display:flex;
+  flex-direction:column;
 }
 
-.proj-grid {
-  display: grid;
-  gap: 18px;
-  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-}
-
-.proj {
-  padding: 16px;
-  border: 1px solid var(--accent);
-  border-radius: 8px;
-}
-
-.timeline {
-  list-style: none;
-  border-left: 2px solid var(--accent);
-  padding-left: 20px;
-}
-
-.timeline li {
-  margin: 12px 0;
+#tensor-container {
+  width:100%;
+  height:100%;
 }
